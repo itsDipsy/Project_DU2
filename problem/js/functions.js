@@ -19,6 +19,10 @@ function click_filter_element(event) {
 
   */
   event.target.classList.toggle("selected");
+ 
+  if(event.target.classList.contains("selected") === true){
+    read_filters();
+  }
 }
 
 
@@ -243,9 +247,13 @@ function read_filters() {
     const id_as_integer = parseInt(dom_element.dataset.id);
     city_id_selected.push(id_as_integer);
   }
-  array_each(city_selected_dom, callback_add_cityID());
+  array_each(city_selected_dom, callback_add_cityID);
+  console.log(city_id_selected);
+  console.log("This is the city_id_selected")
+
 
   const universities = [];
+
   for (let i = 0; i < city_id_selected.length; i++) {
     const city_id = city_id_selected[i];
     for (let ii = 0; ii < UNIVERSITIES.length; ii++) {
@@ -255,7 +263,7 @@ function read_filters() {
       }
     }
   }
-
+  
   let programmes = [];
   function callback_add_programmes(university) {
     const university_id = university.id;
@@ -268,15 +276,22 @@ function read_filters() {
   }
   array_each(universities, callback_add_programmes);
 
+  console.log(universities)
+  console.log("This is the Universites")
 
 
-  const level_selected_dom = document.querySelectorAll("#level_filter li.selected");
+
+  const level_selected_dom = document.querySelectorAll("#level_filter li.selected"); // Detta funkar bara om någon li som har selectats inom level (bachelor,master osv) området har skett
   const level_id_selected = [];
+
+
   function callback_add_levelID(dom_element) {
-    const id_as_integer = parseInt(dom_element.dataset.id);
+    let id_as_integer = parseInt(dom_element.dataset.id);
     level_id_selected.push(id_as_integer);
   }
   array_each(level_selected_dom, callback_add_levelID);
+  console.log(level_id_selected)
+  console.log("This is the level_id_selected")
 
   function test_function_level(programme) {
     return level_id_selected.includes(programme.levelID);
@@ -293,6 +308,8 @@ function read_filters() {
   }
   array_each(language_selected_dom, callback_add_languageID);
 
+  console.log(language_id_selected);
+  console.log("This is the launge_id_selecte")
 
 
   function test_function_language(programme) {
@@ -302,7 +319,7 @@ function read_filters() {
 
 
 
-  const subject_selected_dom = document.querySelectorAll("#subject_filter li.selected");
+  const subject_selected_dom = document.querySelectorAll("#subject_filter li.selected"); // Detta funkar bara om någon li som har selectats inom subjekts området har skett
   const subject_id_selected = [];
   function callback_add_subjectID(dom_element) {
     const id_as_integer = parseInt(dom_element.dataset.id);
@@ -310,6 +327,8 @@ function read_filters() {
   }
   array_each(subject_selected_dom, callback_add_subjectID);
 
+  console.log(subject_id_selected)
+  console.log("This is the subject_id_selected");
 
 
   function test_function_subject(programme) {
@@ -326,11 +345,15 @@ function read_filters() {
     }
     programmes = array_filter(programmes, test_function);
   }
-
+  console.log(programmes);
+  console.log("this is the programmes");
   return programmes;
 }
 
-function check_button() {
-  let buttons = document.querySelectorAll("button");
-  console.log(buttons);
-}
+
+// IMPORTANT!!!! FÖR GRUPPEN
+ 
+/*
+  Tydligen funkar bara return programms om en utav Nivå, Språk, Ämne samt land är selected då kan den returnera 
+  så det som måste lösas nu är att om något av knapparna blir selected så ska allt som matchar den datan retuneras
+*/
