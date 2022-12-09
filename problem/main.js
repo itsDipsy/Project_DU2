@@ -21,6 +21,7 @@ create_language_filter();
 create_countries_cities_filters();
 
 
+
 // Add Interaction of search field button
 document.querySelector("#search_field button").addEventListener("click", update_programmes);
 

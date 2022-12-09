@@ -122,12 +122,3 @@ ul.filter_list>li.selected:before {
 
 
 .country>ul {}
-
-
-
-
-.green {
-  width: 100px;
-  height: 100px;
-  background-color: green;
-}

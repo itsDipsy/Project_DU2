@@ -19,6 +19,11 @@ function click_filter_element(event) {
 
   */
   event.target.classList.toggle("selected");
+
+  if (event.currentTarget.classList.contains("selected") === true) {
+    console.log("Click");
+    create_programme(read_filters());
+  }
 }
 
 
@@ -102,7 +107,6 @@ function toggle_cities(event) {
 //            create_countries_cities_filters, create_country and create_city
 function create_countries_cities_filters() {
 
-
   function create_country(country) {
     const dom = document.createElement("div");
     dom.classList.add("country");
@@ -142,6 +146,8 @@ function create_countries_cities_filters() {
 // ABSTRACT AND WRITE SPECIFICATION
 //    As you can see, all three functions below do basically the same thing.
 //    Abstract them to one function, and write the specification of that function.
+
+// --------------------------------------------------------------------------
 function create_levels_filter() {
   function create_level(level) {
     const dom = create_filter_element({
@@ -178,6 +184,10 @@ function create_language_filter() {
   array_each(LANGUAGES, create_element);
 }
 
+// --------------------------------------------------------------------------
+
+
+
 
 // G / VG (see details in specification)
 // CODE according to specifications
@@ -202,9 +212,24 @@ function create_programme(programme) {
     NO RETURN VALUE
 
   */
+  console.log(programme);
+  for (let i = 0; i < programme.length; i++) { // Detta skapar boxar
+    for (let j = 0; j < UNIVERSITIES.length; j++) {
+      if (UNIVERSITIES.cityID === programme.universityID) {
+        let container = document.querySelector("#programmes ul");
+        let image = CITIES[0].imagesNormal[0];
+        let box = document.createElement("li");
+        box.style.backgroundColor = "green";
+        box.style.margin = "10px"
+        box.style.width = "200px";
+        box.style.height = "200px";
+        container.appendChild(box);
+      }
+    }
 
+    // }
+  }
 }
-
 
 // G
 // CODE according to the specification
@@ -212,18 +237,20 @@ function update_programmes() {
 
   /*
       NO ARGUMENTS
-
+ 
       SIDE EFFECTS
         This function updates the programmes shown on the page according to
         the current filter status (which filter elements are selected / unselected).
         It uses the function read_filters to know which programmes need to be included.
-
+ 
         VG: The top images (header) need to be updated here
-
+ 
       NO RETURN VALUE
-
+ 
   */
-
+  // Det som ska göras hära är att faktiskt fixa det mesta av functionaliten av
+  // hela sidans selcted li element men för att göra detta måste koppla mängder med saker från
+  // data basen
 }
 
 
@@ -234,7 +261,7 @@ function update_programmes() {
 
 // Optional VG: Which parts of the function's code could be abstracted?
 //              Implement it
-function read_filters() {
+function read_filters() { // Denna funkar bara om man ska välja alla fyra li i de olika levels
 
   const city_selected_dom = document.querySelectorAll("#country_filter li.selected");
 
@@ -243,7 +270,9 @@ function read_filters() {
     const id_as_integer = parseInt(dom_element.dataset.id);
     city_id_selected.push(id_as_integer);
   }
-  array_each(city_selected_dom, callback_add_cityID());
+
+
+  array_each(city_selected_dom, callback_add_cityID);
 
   const universities = [];
   for (let i = 0; i < city_id_selected.length; i++) {
@@ -256,7 +285,8 @@ function read_filters() {
     }
   }
 
-  let programmes = [];
+
+  let programmes = []; // THIS IS THE RETURN VALUE
   function callback_add_programmes(university) {
     const university_id = university.id;
     for (let i = 0; i < PROGRAMMES.length; i++) {
@@ -267,7 +297,6 @@ function read_filters() {
     }
   }
   array_each(universities, callback_add_programmes);
-
 
 
   const level_selected_dom = document.querySelectorAll("#level_filter li.selected");
@@ -326,11 +355,7 @@ function read_filters() {
     }
     programmes = array_filter(programmes, test_function);
   }
-
   return programmes;
 }
 
-function check_button() {
-  let buttons = document.querySelectorAll("button");
-  console.log(buttons);
-}
+
