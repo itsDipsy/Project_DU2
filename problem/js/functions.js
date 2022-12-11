@@ -214,22 +214,26 @@ function create_programme(programme) {
   */
   console.log(programme);
   for (let i = 0; i < programme.length; i++) { // Detta skapar boxar
-    for (let j = 0; j < UNIVERSITIES.length; j++) {
-      if (UNIVERSITIES.cityID === programme.universityID) {
-        let container = document.querySelector("#programmes ul");
-        let image = CITIES[0].imagesNormal[0];
-        let box = document.createElement("li");
-        box.style.backgroundColor = "green";
-        box.style.margin = "10px"
-        box.style.width = "200px";
-        box.style.height = "200px";
-        container.appendChild(box);
-      }
+    if (UNIVERSITIES.cityID === programme.universityID) {
+      let container = document.querySelector("#programmes ul");
+      let image = CITIES[0].imagesNormal[0];
+      let box = document.createElement("li");
+      box.innerText = `${programme[i].name}`
+      box.style.color = "white";
+      box.style.fontSize = "25px";
+      box.style.backgroundColor = "green";
+      box.style.margin = "10px"
+      box.style.width = "200px";
+      box.style.height = "200px";
+      container.appendChild(box);
+      // Här kanske man kan skapa en if-sats för att see till att 
+      // det bara finns en av samma box
     }
-
-    // }
   }
+
+  // }
 }
+
 
 // G
 // CODE according to the specification
