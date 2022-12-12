@@ -571,3 +571,5 @@ function read_filters () {
 
 
 // KOLLA PÅ FILMEN PÅ MOBILEN VÄLDIGT VIKTIGT FÖR ATT FÖRSTÅ VAD KOMMER NÄST TILL
+// På update_programmes så måste det nog finnas en eventlistner li.selected för att den ska kunna lyssna och triggas igång 
+// när det klickas på något sätt annars kommer den ju bara köra på direkten i main.js (dator är snabb! tänk på det)
