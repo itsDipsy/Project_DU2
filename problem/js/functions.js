@@ -551,3 +551,23 @@ function read_filters () {
 
   return programmes;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// KOLLA PÅ FILMEN PÅ MOBILEN VÄLDIGT VIKTIGT FÖR ATT FÖRSTÅ VAD KOMMER NÄST TILL
