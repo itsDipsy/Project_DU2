@@ -33,11 +33,10 @@ function click_filter_element(event) {
  
 
   */
-
-  event.currentTarget.classList.toggle("selected");
-
-  if (event.currentTarget.classList.contains("selected")) {
-    console.log(read_filters())
+  event.target.classList.toggle("selected");
+ 
+  if(event.target.classList.contains("selected") === true){
+    read_filters();
   }
 
 }
@@ -275,15 +274,8 @@ function create_countries_cities_filters() {
 //    As you can see, all three functions below do basically the same thing.
 
 //    Abstract them to one function, and write the specification of that function.
-
-function create_filters() {
-
-  let the_counter = 0;
-
-  function create_filter(data) {
-
-    let names = ["level", "subject", "language"];
-
+function create_levels_filter() {
+  function create_level(level) {
     const dom = create_filter_element({
 
       parent: document.querySelector(`#${names[the_counter]}_filter > ul`), // här måste man kunna passa in alla det
@@ -318,82 +310,31 @@ function create_filters() {
 
 }
 
- 
 
 // G / VG (see details in specification)
 
 // CODE according to specifications
 function create_programme(programme) {
 
-    /*
-  
-   
-  
-      ARGUMENT
-  
-        programme (object): One of the objects from PROGRAMMES
-  
-   
-  
-      SIDE-EFFECTS
-  
-        This function creates the HTML-element that contains all the information
-  
-        about one programme, as seen in the video / image.
-  
-       
-  
-        VG: The background image is a random image from among the images of the city
-  
-            in which the programme is (via the university)
-  
-        G:  No background image required.
-  
-   
-  
-        VG: The "see more" interaction must be included.
-  
-        G:  The "see more" element is not required. And that information needs not be in place.
-  
-   
-  
-      NO RETURN VALUE                        
-  
-   
-  
-    */
-  
-    // let div_dom = document.createElement("li");
-  
-    // let div_parent = document.querySelector("#programmes > ul").append(div_dom);
-  
-    // div_dom.style.backgroundColor = "coral";
-  
-    // div_dom.setAttribute("#programmes");
-  
-  let programme_parent = document.querySelector("#programmes > ul");
+  /*
 
-  programme_parent.innerHTML = "";
+    ARGUMENT
+      programme (object): One of the objects from PROGRAMMES
 
-  console.log(CITIES.length);
+    SIDE-EFFECTS
+      This function creates the HTML-element that contains all the information
+      about one programme, as seen in the video / image.
+      
+      VG: The background image is a random image from among the images of the city
+          in which the programme is (via the university)
+      G:  No background image required.
 
-  
+      VG: The "see more" interaction must be included.
+      G:  The "see more" element is not required. And that information needs not be in place.
 
-   
-  let programme_dom = document.createElement("div");
+    NO RETURN VALUE
 
- 
-
-  programme_dom.innerText = programme.name;
-
-  programme_dom.classList.add("programme");
-    
-  programme_dom.style.color = "white";
- 
-  let random_num_0_to_3 = Math.floor(Math.random() * 2);
-  let random_num_0_to_33 = Math.floor(Math.random() * 32);
-  programme_dom.style.backgroundImage = `url(./media/geo_images/${CITIES[random_num_0_to_33].imagesNormal[random_num_0_to_3]})` 
-  programme_parent.append(programme_dom);
+  */
 
 }
 
@@ -409,8 +350,6 @@ function update_programmes() { //
 
       NO ARGUMENTS
 
- 
-
       SIDE EFFECTS
 
         This function updates the programmes shown on the page according to
@@ -419,20 +358,12 @@ function update_programmes() { //
 
         It uses the function read_filters to know which programmes need to be included.
 
- 
-
         VG: The top images (header) need to be updated here
-
- 
 
       NO RETURN VALUE
 
- 
-
   */
-  console.log(document.querySelectorAll(".selected"));
-  let the_toggled_li = document.querySelectorAll("li");
-  console.log(the_toggled_li);
+
 }
 
  
@@ -456,8 +387,8 @@ function update_programmes() { //
 // Optional VG: Which parts of the function's code could be abstracted?
 
 //              Implement it
-function read_filters () {
-  
+function read_filters() {
+
   const city_selected_dom = document.querySelectorAll("#country_filter li.selected");
 
   const city_id_selected = [];
@@ -465,6 +396,8 @@ function read_filters () {
     const id_as_integer = parseInt(dom_element.dataset.id);
     city_id_selected.push(id_as_integer);
   }
+
+
   array_each(city_selected_dom, callback_add_cityID);
 
   const universities = [];
@@ -477,9 +410,9 @@ function read_filters () {
       }
     }
   }
-
+  
   let programmes = [];
-  function callback_add_programmes (university) {
+  function callback_add_programmes(university) {
     const university_id = university.id;
     for (let i = 0; i < PROGRAMMES.length; i++) {
       const programme = PROGRAMMES[i];
@@ -492,10 +425,13 @@ function read_filters () {
 
 
 
-  const level_selected_dom = document.querySelectorAll("#level_filter li.selected");
+
+  const level_selected_dom = document.querySelectorAll("#level_filter li.selected"); // Detta funkar bara om någon li som har selectats inom level (bachelor,master osv) området har skett
   const level_id_selected = [];
-  function callback_add_levelID (dom_element) {
-    const id_as_integer = parseInt(dom_element.dataset.id);
+
+
+  function callback_add_levelID(dom_element) {
+    let id_as_integer = parseInt(dom_element.dataset.id);
     level_id_selected.push(id_as_integer);
   }
   array_each(level_selected_dom, callback_add_levelID);
@@ -548,6 +484,15 @@ function read_filters () {
     }
     programmes = array_filter(programmes, test_function);
   }
-
+  console.log(programmes);
+  console.log("this is the programmes");
   return programmes;
 }
+
+
+// IMPORTANT!!!! FÖR GRUPPEN
+ 
+/*
+  Tydligen funkar bara return programms om en utav Nivå, Språk, Ämne samt land är selected då kan den returnera 
+  så det som måste lösas nu är att om något av knapparna blir selected så ska allt som matchar den datan retuneras
+*/
