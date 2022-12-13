@@ -36,8 +36,13 @@ function click_filter_element(event) {
 
   event.currentTarget.classList.toggle("selected");
 
-  if (event.currentTarget.classList.contains("selected")) {
-    console.log(read_filters())
+  if (event.currentTarget.classList.contains("selected") === true) {
+    console.log("selected");
+    console.log(read_filters());
+  }
+  if (event.currentTarget.classList.contains("selected") === false) {
+    console.log("unselected");
+    console.log(read_filters());
   }
 
 }
@@ -86,21 +91,20 @@ function create_filter_element(data) {
 
   */
 
- 
+
 
   const filer_dom = document.createElement("li");
 
 
-
   filer_dom.classList.add(data.class);
 
- 
 
- 
+
+
 
   filer_dom.textContent = data.textContent;
 
- 
+
 
   data.parent.append(filer_dom);
 
@@ -110,7 +114,7 @@ function create_filter_element(data) {
 
 }
 
- 
+
 
 // VG
 
@@ -148,7 +152,7 @@ function add_group_toggling(filter_container_dom) {
 
 }
 
- 
+
 
 // VG
 
@@ -185,18 +189,18 @@ function toggle_cities(event) {
   the_button.addEventListener("click", () => {
     console.log("button-toggle-off-select-click");
     let all_selected = document.querySelectorAll("li");
-    for(let i = 0; i < all_selected.length; i++ ){
-      if(all_selected[i].classList.contains("selected")){
+    for (let i = 0; i < all_selected.length; i++) {
+      if (all_selected[i].classList.contains("selected")) {
         all_selected[i].classList.remove("selected");
       }
-      else{
+      else {
         all_selected[i].classList.add("selected");
       }
-    }  
-  })   
+    }
+  })
 }
 
- 
+
 
 // WRITE SPECIFICATION
 
@@ -218,7 +222,7 @@ function create_countries_cities_filters() {
 
     document.querySelector("#country_filter > ul").append(dom);
 
- 
+
 
     dom.innerHTML = `
 
@@ -228,7 +232,7 @@ function create_countries_cities_filters() {
 
     `;
 
- 
+
 
     const cities = array_filter(CITIES, test_function);
 
@@ -238,7 +242,7 @@ function create_countries_cities_filters() {
 
     }
 
- 
+
 
     array_each(cities, create_city);
 
@@ -260,13 +264,13 @@ function create_countries_cities_filters() {
 
   }
 
- 
+
 
   array_each(COUNTRIES, create_country);
 
 }
 
- 
+
 
 // G
 
@@ -318,86 +322,77 @@ function create_filters() {
 
 }
 
- 
+
 
 // G / VG (see details in specification)
 
 // CODE according to specifications
 function create_programme(programme) {
 
-    /*
-  
-   
-  
-      ARGUMENT
-  
-        programme (object): One of the objects from PROGRAMMES
-  
-   
-  
-      SIDE-EFFECTS
-  
-        This function creates the HTML-element that contains all the information
-  
-        about one programme, as seen in the video / image.
-  
-       
-  
-        VG: The background image is a random image from among the images of the city
-  
-            in which the programme is (via the university)
-  
-        G:  No background image required.
-  
-   
-  
-        VG: The "see more" interaction must be included.
-  
-        G:  The "see more" element is not required. And that information needs not be in place.
-  
-   
-  
-      NO RETURN VALUE                        
-  
-   
-  
-    */
-  
-    // let div_dom = document.createElement("li");
-  
-    // let div_parent = document.querySelector("#programmes > ul").append(div_dom);
-  
-    // div_dom.style.backgroundColor = "coral";
-  
-    // div_dom.setAttribute("#programmes");
-  
+  /*
+ 
+ 
+ 
+    ARGUMENT
+ 
+      programme (object): One of the objects from PROGRAMMES
+ 
+ 
+ 
+    SIDE-EFFECTS
+ 
+      This function creates the HTML-element that contains all the information
+ 
+      about one programme, as seen in the video / image.
+ 
+     
+ 
+      VG: The background image is a random image from among the images of the city
+ 
+          in which the programme is (via the university)
+ 
+      G:  No background image required.
+ 
+ 
+ 
+      VG: The "see more" interaction must be included.
+ 
+      G:  The "see more" element is not required. And that information needs not be in place.
+ 
+ 
+ 
+    NO RETURN VALUE                        
+ 
+ 
+ 
+  */
   let programme_parent = document.querySelector("#programmes > ul");
 
   programme_parent.innerHTML = "";
 
   console.log(CITIES.length);
 
-  
 
-   
-  let programme_dom = document.createElement("div");
 
- 
+
+  let programme_dom = document.createElement("li");
+
+
 
   programme_dom.innerText = programme.name;
 
   programme_dom.classList.add("programme");
-    
+
   programme_dom.style.color = "white";
- 
+
   let random_num_0_to_3 = Math.floor(Math.random() * 2);
   let random_num_0_to_33 = Math.floor(Math.random() * 32);
-  programme_dom.style.backgroundImage = `url(./media/geo_images/${CITIES[random_num_0_to_33].imagesNormal[random_num_0_to_3]})` 
+  programme_dom.style.backgroundImage = `url(./media/geo_images/${CITIES[random_num_0_to_33].imagesNormal[random_num_0_to_3]})`
   programme_parent.append(programme_dom);
 
 }
 
- 
+
 
 // G
 
@@ -432,36 +427,36 @@ function update_programmes() {
   */
   console.log(document.querySelectorAll(".selected"));
   let the_toggled_li = document.querySelectorAll("li");
-  
+
 }
 
- 
+
 
 // G
 
 // WRITE SPECIFICATION
 
- 
+
 
 // Denna funktionen skapar fyra arrays som skickar in data från vår js fil (database.js) Med hjälp av array_each så skickar vi in det vi vill ha till en ny array som har namnet programme. I programme så sparar vi alla namn som vi har skickat in med hjälp av array_each.
 
- 
+
 
 // You must understand how this function works. There will be questions about it
 
 // in the code review (kodredovisning)
 
- 
+
 
 // Optional VG: Which parts of the function's code could be abstracted?
 
 //              Implement it
-function read_filters () {
-  
+function read_filters() {
+
   const city_selected_dom = document.querySelectorAll("#country_filter li.selected");
 
   const city_id_selected = [];
-  function callback_add_cityID (dom_element) {
+  function callback_add_cityID(dom_element) {
     const id_as_integer = parseInt(dom_element.dataset.id);
     city_id_selected.push(id_as_integer);
   }
@@ -479,7 +474,7 @@ function read_filters () {
   }
 
   let programmes = [];
-  function callback_add_programmes (university) {
+  function callback_add_programmes(university) {
     const university_id = university.id;
     for (let i = 0; i < PROGRAMMES.length; i++) {
       const programme = PROGRAMMES[i];
@@ -494,13 +489,13 @@ function read_filters () {
 
   const level_selected_dom = document.querySelectorAll("#level_filter li.selected");
   const level_id_selected = [];
-  function callback_add_levelID (dom_element) {
+  function callback_add_levelID(dom_element) {
     const id_as_integer = parseInt(dom_element.dataset.id);
     level_id_selected.push(id_as_integer);
   }
   array_each(level_selected_dom, callback_add_levelID);
 
-  function test_function_level (programme) {
+  function test_function_level(programme) {
     return level_id_selected.includes(programme.levelID);
   }
   programmes = array_filter(programmes, test_function_level);
@@ -509,7 +504,7 @@ function read_filters () {
 
   const language_selected_dom = document.querySelectorAll("#language_filter li.selected");
   const language_id_selected = [];
-  function callback_add_languageID (dom_element) {
+  function callback_add_languageID(dom_element) {
     const id_as_integer = parseInt(dom_element.dataset.id);
     language_id_selected.push(id_as_integer);
   }
@@ -517,7 +512,7 @@ function read_filters () {
 
 
 
-  function test_function_language (programme) {
+  function test_function_language(programme) {
     return language_id_selected.includes(programme.languageID);
   }
   programmes = array_filter(programmes, test_function_language);
@@ -526,7 +521,7 @@ function read_filters () {
 
   const subject_selected_dom = document.querySelectorAll("#subject_filter li.selected");
   const subject_id_selected = [];
-  function callback_add_subjectID (dom_element) {
+  function callback_add_subjectID(dom_element) {
     const id_as_integer = parseInt(dom_element.dataset.id);
     subject_id_selected.push(id_as_integer);
   }
@@ -534,7 +529,7 @@ function read_filters () {
 
 
 
-  function test_function_subject (programme) {
+  function test_function_subject(programme) {
     return subject_id_selected.includes(programme.subjectID);
   }
   programmes = array_filter(programmes, test_function_subject);
@@ -543,7 +538,7 @@ function read_filters () {
 
   const search_string = document.querySelector("#search_field input").value;
   if (search_string !== "") {
-    function test_function (programme) {
+    function test_function(programme) {
       return programme.name.includes(search_string);
     }
     programmes = array_filter(programmes, test_function);
@@ -571,5 +566,5 @@ function read_filters () {
 
 
 // KOLLA PÅ FILMEN PÅ MOBILEN VÄLDIGT VIKTIGT FÖR ATT FÖRSTÅ VAD KOMMER NÄST TILL
-// På update_programmes så måste det nog finnas en eventlistner li.selected för att den ska kunna lyssna och triggas igång 
+// På update_programmes så måste det nog finnas en eventlistner li.selected för att den ska kunna lyssna och triggas igång
 // när det klickas på något sätt annars kommer den ju bara köra på direkten i main.js (dator är snabb! tänk på det)
