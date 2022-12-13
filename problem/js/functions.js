@@ -38,14 +38,16 @@ function click_filter_element(event) {
 
   if (event.currentTarget.classList.contains("selected") === true) {
     console.log("selected");
-    console.log(read_filters());
+    update_programmes();
+    
   }
   if (event.currentTarget.classList.contains("selected") === false) {
-    console.log("unselected");
-    console.log(read_filters());
+   console.log("unselected");
+   update_programmes();
   }
-
 }
+
+
 
 // G
 
@@ -91,7 +93,7 @@ function create_filter_element(data) {
 
   */
 
-
+  
 
   const filer_dom = document.createElement("li");
 
@@ -192,9 +194,11 @@ function toggle_cities(event) {
     for (let i = 0; i < all_selected.length; i++) {
       if (all_selected[i].classList.contains("selected")) {
         all_selected[i].classList.remove("selected");
+        update_programmes();
       }
       else {
         all_selected[i].classList.add("selected");
+        update_programmes();
       }
     }
   })
@@ -366,15 +370,12 @@ function create_programme(programme) {
  
  
   */
+  
   let programme_parent = document.querySelector("#programmes > ul");
 
-  programme_parent.innerHTML = "";
-
-  console.log(CITIES.length);
 
 
-
-
+  
   let programme_dom = document.createElement("li");
 
 
@@ -425,8 +426,13 @@ function update_programmes() {
  
 
   */
-  console.log(document.querySelectorAll(".selected"));
-  let the_toggled_li = document.querySelectorAll("li");
+  let parent_programe_ul = document.querySelector("#programmes > ul ");
+  parent_programe_ul.innerHTML = "";
+  let number_of_programmes = read_filters();
+  console.log(number_of_programmes);
+  for (let i = 0; i < number_of_programmes.length; i++) {
+    create_programme(number_of_programmes[i]);
+  }
 
 }
 
