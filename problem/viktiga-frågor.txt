@@ -1,0 +1,4 @@
+- MAN FÅR ÄNDRA OCH fixa alla functioner!
+- MAN FÅR anropa uppdate_programmes ska anropas varje click!!, Detta betyder att utan för create_programms så ska 
+så ska man använda sig av en for-loop och därmed passa in ett av program objecten till create_programs istället för hela
+objectet.

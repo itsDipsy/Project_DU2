@@ -35,14 +35,22 @@ function click_filter_element(event) {
   */
 
   event.currentTarget.classList.toggle("selected");
+  let programmes = read_filters(); // antalet programms, blir mer eller mindre beronde på klick av li och upptadering av programms per klick
 
   if (event.currentTarget.classList.contains("selected") === true) {
-    console.log("selected");
-    console.log(read_filters());
+
+    for (let i = 0; i < programmes.length; i++) {
+      let programme = programmes[i];
+      console.log(programme);
+      create_programme(programme);
+    }
   }
   if (event.currentTarget.classList.contains("selected") === false) {
-    console.log("unselected");
-    console.log(read_filters());
+    for (let j = 0; j < programmes.length; j++) {
+      let programme = programmes[j];
+      console.log(programme);
+      create_programme(programme);
+    }
   }
 
 }
