@@ -35,7 +35,7 @@ function click_filter_element(event) {
   */
 
   event.currentTarget.classList.toggle("selected"); // togglar selected på alla de som li som clickas
-  let programmes = read_filters(); // antalet programms, blir mer eller mindre beronde på klick av li och upptadering av programms per klick
+  // antalet programms, blir mer eller mindre beronde på klick av li och upptadering av programms per klick
   // Tar bort alla ul som fanns tidagare så att det inte appends på de gamala
 
   let all_programs_appended_before = document.querySelector("#programmes > ul");
@@ -46,11 +46,8 @@ function click_filter_element(event) {
                                                   allt så att det inte blir fler av samma programmes
                                                 */
   if (event.currentTarget.classList.contains("selected") === true) {
-    for (let i = 0; i < programmes.length; i++) {
-      let programme = programmes[i];
-      console.log(programme);
-      create_programme(programme);
-    }
+    console.log("selected");
+    update_programmes();
   }
   if (event.currentTarget.classList.contains("selected") === false) {
     console.log("unselected");
@@ -270,7 +267,7 @@ function create_countries_cities_filters() {
 
       parent: document.querySelector(`#country_${city.countryID} > ul`),
 
-      class: "selected",
+      class: "swsw",
 
       textContent: city.name,
 
@@ -308,7 +305,7 @@ function create_filters() {
 
       parent: document.querySelector(`#${names[the_counter]}_filter > ul`), // här måste man kunna passa in alla det
 
-      class: "selected",
+      class: "ssww",
 
       textContent: data.name,
 
@@ -382,27 +379,28 @@ function create_programme(programme) {
  
  
   */
-  let programme_parent = document.querySelector("#programmes > ul");
 
+  if (programme !== undefined) {
+    let programme_parent = document.querySelector("#programmes > ul");
+    let programme_dom = document.createElement("li");
 
+    let the_selected = document.querySelectorAll("select");
+    programme_dom.innerText = programme.name;
+    programme_dom.classList.add("programme");
 
-
-  let programme_dom = document.createElement("li");
-
-
-
-  programme_dom.innerText = programme.name;
-
-  programme_dom.classList.add("programme");
-
-  programme_dom.style.color = "white";
-  for (let i = 0; i < UNIVERSITIES.length; i++) {
-    if (programme.universityID === UNIVERSITIES[i].id) {
-
-    }
+    programme_dom.style.color = "white";
+    let random_num = Math.floor(Math.random() * 3);
+    programme_parent.append(programme_dom);
   }
-  programme_parent.append(programme_dom);
+  // for (let i = 0; i < CITIES.length - 1; i++) {
+  //   if (CITIES[i].id === UNIVERSITIES[i].cityID) {
+  //     console.log(i);
+  //     console.log(CITIES[i].id);
+  //     console.log(UNIVERSITIES[i].cityID);
 
+  //     programme_dom.style.backgroundImage = `url(./media/geo_images/${CITIES[i].imagesNormal[random_num]})`;
+  //   }
+  // }
 }
 
 
@@ -440,9 +438,10 @@ function update_programmes() {
   */
 
   let number_of_programmes = read_filters();
+  console.log(number_of_programmes);
   let all_programs_appended_before = document.querySelector("#programmes > ul");
   all_programs_appended_before.innerHTML = "";
-  for (let i = 0; i < number_of_programmes.length; i++) {
+  for (let i = 0; i <= number_of_programmes.length; i++) {
     create_programme(number_of_programmes[i]);
   }
 
@@ -564,25 +563,3 @@ function read_filters() {
 
   return programmes;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// KOLLA PÅ FILMEN PÅ MOBILEN VÄLDIGT VIKTIGT FÖR ATT FÖRSTÅ VAD KOMMER NÄST TILL
-// På update_programmes så måste det nog finnas en eventlistner li.selected för att den ska kunna lyssna och triggas igång
-// när det klickas på något sätt annars kommer den ju bara köra på direkten i main.js (dator är snabb! tänk på det)
