@@ -192,13 +192,9 @@ function toggle_cities(event) {
  
 
     NO RETURN VALUE
-
- 
-
 */
   let the_button = document.querySelector("#country_filter > button");
   the_button.addEventListener("click", () => {
-    console.log("button-toggle-off-select-click");
     let all_selected = document.querySelectorAll("li");
     for (let i = 0; i < all_selected.length; i++) {
       if (all_selected[i].classList.contains("selected")) {
@@ -267,7 +263,7 @@ function create_countries_cities_filters() {
 
       parent: document.querySelector(`#country_${city.countryID} > ul`),
 
-      class: "swsw",
+      class: "swsw", // ska va selected, igentligen men då selecteras alla lite jobbigt att jobba med det så ändrade det
 
       textContent: city.name,
 
@@ -305,7 +301,7 @@ function create_filters() {
 
       parent: document.querySelector(`#${names[the_counter]}_filter > ul`), // här måste man kunna passa in alla det
 
-      class: "ssww",
+      class: "ssww",// ska va selected, igentligen men då selecteras alla lite jobbigt att jobba med det så ändrade det
 
       textContent: data.name,
 
@@ -380,6 +376,14 @@ function create_programme(programme) {
  
   */
 
+
+  /*
+  THE KEY TO THIS ALGORITHM IS TOO SAVE THINGS IN VARABLES
+  BECAUSE THE DATABASE WORKS AS A STAIR AND VARIABLE LEEDS TO
+  THE EXACT VARIABLE I NEEDED WHICH WAS THE CITY ID
+  */
+
+
   if (programme !== undefined) {
     let programme_parent = document.querySelector("#programmes > ul");
     let programme_dom = document.createElement("li");
@@ -389,19 +393,29 @@ function create_programme(programme) {
     programme_dom.classList.add("programme");
 
     programme_dom.style.color = "white";
-    let random_num = Math.floor(Math.random() * 3);
-    programme_parent.append(programme_dom);
-  }
-  // for (let i = 0; i < CITIES.length - 1; i++) {
-  //   if (CITIES[i].id === UNIVERSITIES[i].cityID) {
-  //     console.log(i);
-  //     console.log(CITIES[i].id);
-  //     console.log(UNIVERSITIES[i].cityID);
 
-  //     programme_dom.style.backgroundImage = `url(./media/geo_images/${CITIES[i].imagesNormal[random_num]})`;
-  //   }
-  // }
+    // THIS IS THE ALGOTRITHM TO CHECK AND APPLY A LOCATION TO A PICTURE CORRECTLY
+    let random_num = Math.floor(Math.random() * 2);
+    for (let j = 0; j < PROGRAMMES.length - 1; j++) {
+      if (programme.universityID === PROGRAMMES[j].universityID) {
+        let the_univeristy_id = programme.universityID;
+        if (the_univeristy_id === UNIVERSITIES[the_univeristy_id].id) {
+          let cityID = UNIVERSITIES[the_univeristy_id].cityID;
+          let uniID = UNIVERSITIES[the_univeristy_id].id;
+          console.log(cityID);
+          console.log(uniID)
+          programme_dom.style.backgroundImage = `url(./media/geo_images/${CITIES[cityID].imagesNormal[random_num]})`;
+          programme_parent.append(programme_dom);
+        }
+      }
+
+    }
+
+  }
+
 }
+
+
 
 
 
