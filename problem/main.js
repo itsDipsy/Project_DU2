@@ -18,7 +18,6 @@
 
 create_filters();
 create_countries_cities_filters();
-toggle_cities();
 
 
 // Add Interaction of search field button
@@ -30,6 +29,7 @@ update_programmes();
 
 // VG
 // Add Interaction of filter containers (select-deselect all filters in the container)
+toggle_cities();
 // Example: Click anywhere on the language-filter-container and all the language filters
 // (spanska, svenska, engelska, franska) will toggle.
 

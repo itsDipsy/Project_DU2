@@ -34,28 +34,23 @@ function click_filter_element(event) {
 
   */
 
-  event.currentTarget.classList.toggle("selected");
+  event.currentTarget.classList.toggle("selected"); // togglar selected på alla de som li som clickas
   let programmes = read_filters(); // antalet programms, blir mer eller mindre beronde på klick av li och upptadering av programms per klick
+  // Tar bort alla ul som fanns tidagare så att det inte appends på de gamala
 
+  let all_programs_appended_before = document.querySelector("#programmes > ul");
+  all_programs_appended_before.innerHTML = ""; /*
+                                                  JÄTTE VIKTIGT!
+                                                  Detta tar bort all tidagre element inuti programmes ul
+                                                  så att när uppdate_programs sker så kan den igen appenda
+                                                  allt så att det inte blir fler av samma programmes
+                                                */
   if (event.currentTarget.classList.contains("selected") === true) {
-
-
     for (let i = 0; i < programmes.length; i++) {
       let programme = programmes[i];
       console.log(programme);
       create_programme(programme);
     }
-  }
-  if (event.currentTarget.classList.contains("selected") === false) {
-    for (let j = 0; j < programmes.length; j++) {
-      let programme = programmes[j];
-      console.log(programme);
-      create_programme(programme);
-    }
-
-    console.log("selected");
-    update_programmes();
-
   }
   if (event.currentTarget.classList.contains("selected") === false) {
     console.log("unselected");
@@ -387,7 +382,6 @@ function create_programme(programme) {
  
  
   */
-
   let programme_parent = document.querySelector("#programmes > ul");
 
 
@@ -402,10 +396,11 @@ function create_programme(programme) {
   programme_dom.classList.add("programme");
 
   programme_dom.style.color = "white";
+  for (let i = 0; i < UNIVERSITIES.length; i++) {
+    if (programme.universityID === UNIVERSITIES[i].id) {
 
-  let random_num_0_to_3 = Math.floor(Math.random() * 2);
-  let random_num_0_to_33 = Math.floor(Math.random() * 32);
-  programme_dom.style.backgroundImage = `url(./media/geo_images/${CITIES[random_num_0_to_33].imagesNormal[random_num_0_to_3]})`
+    }
+  }
   programme_parent.append(programme_dom);
 
 }
@@ -443,10 +438,10 @@ function update_programmes() {
  
 
   */
-  let parent_programe_ul = document.querySelector("#programmes > ul ");
-  parent_programe_ul.innerHTML = "";
+
   let number_of_programmes = read_filters();
-  console.log(number_of_programmes);
+  let all_programs_appended_before = document.querySelector("#programmes > ul");
+  all_programs_appended_before.innerHTML = "";
   for (let i = 0; i < number_of_programmes.length; i++) {
     create_programme(number_of_programmes[i]);
   }
