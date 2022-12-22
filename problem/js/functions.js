@@ -1,6 +1,6 @@
 // G!
 
-// CODE According to specification
+// CODE According to specification ---- KLAR
 
 function click_filter_element(event) {
 
@@ -19,8 +19,6 @@ function click_filter_element(event) {
       Since a filter element will have changed after the click, the list of
 
       programmes must be updated.
-
- 
 
       Attention VG
 
@@ -60,7 +58,7 @@ function click_filter_element(event) {
 
 // G
 
-// CODE according to specification
+// CODE according to specification  ---- KLAR
 
 function create_filter_element(data) {
 
@@ -169,7 +167,7 @@ function add_group_toggling(filter_container_dom) {
 
 // CODE according to specifications
 
-function toggle_cities(event) {
+function toggle_cities() {
 
   /*
 
@@ -196,14 +194,20 @@ function toggle_cities(event) {
   let the_button = document.querySelector("#country_filter > button");
   the_button.addEventListener("click", () => {
     let all_selected = document.querySelectorAll("li");
-    for (let i = 0; i < all_selected.length; i++) {
-      if (all_selected[i].classList.contains("selected")) {
-        all_selected[i].classList.remove("selected");
-        update_programmes();
+    if (all_selected[0].classList.contains("selected")) {
+      for (let i = 0; i < all_selected.length; i++) {
+        if (all_selected[i].classList.contains("selected") === true) {
+          all_selected[i].classList.remove("selected");
+          update_programmes();
+        }
       }
-      else {
-        all_selected[i].classList.add("selected");
-        update_programmes();
+    }
+    else {
+      for (let i = 0; i < all_selected.length; i++) {
+        if (all_selected[i].classList.contains("selected") === false) {
+          all_selected[i].classList.add("selected");
+          update_programmes();
+        }
       }
     }
   })
@@ -263,7 +267,7 @@ function create_countries_cities_filters() {
 
       parent: document.querySelector(`#country_${city.countryID} > ul`),
 
-      class: "swsw", // ska va selected, igentligen men då selecteras alla lite jobbigt att jobba med det så ändrade det
+      class: "selected", // ska va selected, igentligen men då selecteras alla lite jobbigt att jobba med det så ändrade det
 
       textContent: city.name,
 
@@ -301,7 +305,7 @@ function create_filters() {
 
       parent: document.querySelector(`#${names[the_counter]}_filter > ul`), // här måste man kunna passa in alla det
 
-      class: "ssww",// ska va selected, igentligen men då selecteras alla lite jobbigt att jobba med det så ändrade det
+      class: "selected",// ska va selected, igentligen men då selecteras alla lite jobbigt att jobba med det så ändrade det
 
       textContent: data.name,
 
@@ -385,32 +389,45 @@ function create_programme(programme) {
 
 
   if (programme !== undefined) {
-    let programme_parent = document.querySelector("#programmes > ul");
+    let programme_parent = document.querySelector("#programmes ul");
     let programme_dom = document.createElement("li");
 
     let the_selected = document.querySelectorAll("select");
-    programme_dom.innerText = programme.name;
     programme_dom.classList.add("programme");
 
-    programme_dom.style.color = "white";
 
     // THIS IS THE ALGOTRITHM TO CHECK AND APPLY A LOCATION TO A PICTURE CORRECTLY
     let random_num = Math.floor(Math.random() * 2);
+    let random_num_for_procenter_function = Math.floor(Math.random() * 10);
     for (let j = 0; j < PROGRAMMES.length - 1; j++) {
       if (programme.universityID === PROGRAMMES[j].universityID) {
         let the_univeristy_id = programme.universityID;
         if (the_univeristy_id === UNIVERSITIES[the_univeristy_id].id) {
-          let cityID = UNIVERSITIES[the_univeristy_id].cityID;
-          let uniID = UNIVERSITIES[the_univeristy_id].id;
-          console.log(cityID);
-          console.log(uniID)
-          programme_dom.style.backgroundImage = `url(./media/geo_images/${CITIES[cityID].imagesNormal[random_num]})`;
-          programme_parent.append(programme_dom);
+
+          let city_id = UNIVERSITIES[the_univeristy_id].cityID;
+          let uni_id = UNIVERSITIES[the_univeristy_id].id;
+          let country_id = CITIES[city_id].countryID;
+
+          programme_dom.style.backgroundImage = `url(./media/geo_images/${CITIES[city_id].imagesNormal[random_num]})`;
+          programme_dom.innerHTML = `
+            <div class="first_part_of_program_info">
+              <div class="programme_name">${programme.name}</div>
+              <div class="programme_univeristy">${UNIVERSITIES[uni_id].name}</div> 
+              <div class="programme_country_and_city"> ${COUNTRIES[country_id].name}, ${CITIES[city_id].name}</div> 
+              <div class="level_laung_subject">${LEVELS[programme.levelID - 1].name}, ${SUBJECTS[programme.subjectID].name}, ${LANGUAGES[programme.languageID].name} </div>
+            </div>
+            <div class="more_info">
+              <div class="show_more_text"></div>
+            </div>
+            <div class="bottom_programme">
+              <div class="">${CITIES[city_id].name}, sun-index:  ${get_random_number(400)} (${percenter(random_num_for_procenter_function, 10)})% </div>
+            </div>
+          `
         }
       }
 
     }
-
+    programme_parent.append(programme_dom);
   }
 
 }
@@ -452,13 +469,18 @@ function update_programmes() {
   */
 
   let number_of_programmes = read_filters();
+  let the_top_images = document.querySelectorAll("#top_images div");
   console.log(number_of_programmes);
   let all_programs_appended_before = document.querySelector("#programmes > ul");
   all_programs_appended_before.innerHTML = "";
+  for (let j = 0; j <= the_top_images.length - 1; j++) {
+    let random_num_for_images = Math.floor(Math.random() * 1);
+    let random_num_for_cities = Math.floor(Math.random() * 32);
+    the_top_images[j].style.backgroundImage = `url(./media/geo_images/${CITIES[random_num_for_cities].imagesNormal[random_num_for_images]})`;
+  }
   for (let i = 0; i <= number_of_programmes.length; i++) {
     create_programme(number_of_programmes[i]);
   }
-
 }
 
 

@@ -1,0 +1,19 @@
+
+Klar ---------------------------------
+                                    
+function click_filter_element   - g    
+function create_filter_element  - g     
+function toggle_cities - vg                                  
+function create_filters - g / den måste doc fixas till lite (bajs kod)  
+function update_programmes - g                                   
+                                    
+-------------------------------------- 
+
+
+Inte Klar ----------------------------
+
+function add_group_toggling - vg
+
+
+
+--------------------------------------
