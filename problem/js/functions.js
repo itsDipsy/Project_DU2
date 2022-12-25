@@ -341,7 +341,6 @@ function create_filters() {
 
 // CODE according to specifications
 function create_programme(programme) {
-
   /*
  
  
@@ -420,7 +419,7 @@ function create_programme(programme) {
               <div class="show_more_text"></div>
             </div>
             <div class="bottom_programme">
-              <div class="">${CITIES[city_id].name}, sun-index:  ${get_random_number(400)} (${percenter(random_num_for_procenter_function, 10)})% </div>
+              <div class="the_text_bottom_prog">${CITIES[city_id].name}, sun-index:  ${get_random_number(400)} (${percenter(random_num_for_procenter_function, 10)})% </div>
             </div>
           `
         }
@@ -429,7 +428,6 @@ function create_programme(programme) {
     }
     programme_parent.append(programme_dom);
   }
-
 }
 
 
@@ -470,7 +468,6 @@ function update_programmes() {
 
   let number_of_programmes = read_filters();
   let the_top_images = document.querySelectorAll("#top_images div");
-  console.log(number_of_programmes);
   let all_programs_appended_before = document.querySelector("#programmes > ul");
   all_programs_appended_before.innerHTML = "";
   for (let j = 0; j <= the_top_images.length - 1; j++) {
@@ -481,6 +478,7 @@ function update_programmes() {
   for (let i = 0; i <= number_of_programmes.length; i++) {
     create_programme(number_of_programmes[i]);
   }
+  show_more_click_event(number_of_programmes);
 }
 
 
@@ -598,4 +596,46 @@ function read_filters() {
   }
 
   return programmes;
+}
+
+
+function show_more_click_event(programes) {
+
+  let the_show_more_button = document.querySelectorAll(".more_info");
+  for (let j = 0; j <= the_show_more_button.length - 1; j++) {
+    the_show_more_button[j].addEventListener("click", (event) => {
+      let the_program = programes[j];
+      if (event.currentTarget.classList.toggle("toggled_more_info")) {
+
+        let the_inner_text_dom = document.createElement("div");
+        let the_average_sum = 0;
+        let success_rate_sum = 0;
+        for (let o = 0; o <= the_program.entryGrades.length - 1; o++) {
+          the_average_sum = the_average_sum + the_program.entryGrades[o];
+        }
+        for (let w = 0; w < the_program.successRate.length; w++) {
+          success_rate_sum = success_rate_sum + the_program.successRate[w];
+        }
+
+        let average_entry_grades_result = the_average_sum / the_program.entryGrades.length;
+        let success_rate_result = success_rate_sum / the_program.successRate.length;
+        the_inner_text_dom.innerHTML = `
+          <div> 
+            Average entry grade: ${average_entry_grades_result.toFixed(1)}
+          </div>
+          <div>
+              Success rate: ${success_rate_result.toFixed(2)} %
+          </div>
+          <div>
+              Exchange ratio: ${the_program.exchangeStudents} / ${the_program.localStudents}
+          </div>
+          `;
+        the_show_more_button[j].appendChild(the_inner_text_dom);
+      }
+      else {
+        the_show_more_button[j].innerHTML = "";
+      }
+    })
+  }
+
 }

@@ -1,3 +1,7 @@
+:root {
+  --text: "show more";
+}
+
 #programmes ul {
   --nCols: 3;
   display: grid;
@@ -35,12 +39,8 @@
 }
 
 .more_info::before {
-  content: "show more";
+  content: var(--text);
   color: navy;
-}
-
-.programme.show_more .more_info::before {
-  content: "show less";
 }
 
 .more_info .extra_info {
@@ -53,7 +53,6 @@
 
 
 .bottom_programme {
-  margin-top: 11vh;
   color: black;
 }
 
@@ -88,4 +87,10 @@
 
 .level_laung_subject {
   color: black;
+}
+
+.toggled_more_info {
+  width: 100%;
+  height: 80%;
+
 }
