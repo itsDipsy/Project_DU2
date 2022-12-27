@@ -48,6 +48,7 @@ function click_filter_element(event) {
     update_programmes();
   }
   if (event.currentTarget.classList.contains("selected") === false) {
+    event.currentTarget.classList.add("unselected");
     console.log("unselected");
     update_programmes();
 
@@ -130,7 +131,7 @@ function create_filter_element(data) {
 // CODE according to specification
 
 function add_group_toggling(filter_container_dom) {
-
+  console.log(filter_container_dom);
   /*
 
     ARGUMENT
@@ -158,7 +159,14 @@ function add_group_toggling(filter_container_dom) {
  
 
   */
+  let the_inner_li_doms = document.querySelectorAll(`#${filter_container_dom.id} > ul > li`);
+  console.log(the_inner_li_doms);
+  for (let i = 0; i < the_inner_li_doms.length; i++) {
+    if (the_inner_li_doms[i].classList.toggle("selected") === true) {
+    }
+  }
 
+  update_programmes();
 }
 
 
@@ -192,8 +200,9 @@ function toggle_cities() {
     NO RETURN VALUE
 */
   let the_button = document.querySelector("#country_filter > button");
+
   the_button.addEventListener("click", () => {
-    let all_selected = document.querySelectorAll("li");
+    let all_selected = document.querySelectorAll(".country > ul > li");
     if (all_selected[0].classList.contains("selected")) {
       for (let i = 0; i < all_selected.length; i++) {
         if (all_selected[i].classList.contains("selected") === true) {
