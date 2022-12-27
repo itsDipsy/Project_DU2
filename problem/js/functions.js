@@ -610,9 +610,11 @@ function show_more_click_event(programes) {
         let the_inner_text_dom = document.createElement("div");
         let the_average_sum = 0;
         let success_rate_sum = 0;
+
         for (let o = 0; o <= the_program.entryGrades.length - 1; o++) {
           the_average_sum = the_average_sum + the_program.entryGrades[o];
         }
+
         for (let w = 0; w < the_program.successRate.length; w++) {
           success_rate_sum = success_rate_sum + the_program.successRate[w];
         }
