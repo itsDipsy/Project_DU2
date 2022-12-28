@@ -48,7 +48,6 @@ function click_filter_element(event) {
     update_programmes();
   }
   if (event.currentTarget.classList.contains("selected") === false) {
-    event.currentTarget.classList.add("unselected");
     console.log("unselected");
     update_programmes();
 
@@ -131,7 +130,6 @@ function create_filter_element(data) {
 // CODE according to specification
 
 function add_group_toggling(filter_container_dom) {
-  console.log(filter_container_dom);
   /*
 
     ARGUMENT
@@ -159,13 +157,12 @@ function add_group_toggling(filter_container_dom) {
  
 
   */
-  let the_inner_li_doms = document.querySelectorAll(`#${filter_container_dom.id} > ul > li`);
-  console.log(the_inner_li_doms);
-  for (let i = 0; i < the_inner_li_doms.length; i++) {
-    if (the_inner_li_doms[i].classList.toggle("selected") === true) {
-    }
+  console.log(filter_container_dom);
+  let the_selected_lis = document.querySelectorAll(`#${filter_container_dom.id} > ul > li`);
+  console.log(the_selected_lis);
+  for (let i = 0; i < the_selected_lis.length; i++) {
+    the_selected_lis[i].classList.toggle("selected");
   }
-
   update_programmes();
 }
 
