@@ -29,6 +29,10 @@ update_programmes();
 
 // VG
 // Add Interaction of filter containers (select-deselect all filters in the container)
+
+// DETTA FUNKAR TYP, MEN NÄR MAN KLICKAR PÅ EN LI SÅ FUNKAR DET OCKSÅ VILKET
+// BLIR HELT KNAS SÅ DET MÅSTE FIXAS, MIN TANKE ÄR ATT DET FINNS NÅGON FORM AV 
+// CHILDREN PARENT GREJ INVOLVERAD
 let the_filter_doms = document.querySelectorAll("#others_filter > div");
 for (let i = 0; i <= the_filter_doms.length - 1; i++) {
   the_filter_doms[i].addEventListener("click", (event) => {
