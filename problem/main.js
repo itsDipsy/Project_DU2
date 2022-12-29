@@ -37,6 +37,7 @@ let the_filter_doms = document.querySelectorAll("#others_filter > div");
 for (let i = 0; i <= the_filter_doms.length - 1; i++) {
   the_filter_doms[i].addEventListener("click", (event) => {
     add_group_toggling(event.currentTarget)
+    event.stopPropagation();
   })
 }
 
