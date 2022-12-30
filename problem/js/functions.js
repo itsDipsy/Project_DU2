@@ -52,7 +52,7 @@ function click_filter_element(event) {
     update_programmes();
 
   }
-  event.stopPropagation();
+  event.stopPropagation(); // denna stopar bubblingen till parenten
 }
 
 
