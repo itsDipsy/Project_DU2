@@ -21,6 +21,11 @@
   display: flex;
   gap: calc(3 * var(--gap));
   flex-direction: column;
+  position: relative;
+  /*
+  postion relative behövs för
+  att kunna postionera elementen i absolute
+  */
 }
 
 .programme>* {
@@ -54,7 +59,16 @@
 
 .bottom_programme {
   color: black;
-
+  position: absolute;
+  /*
+  postion absolute använder jag för
+  att kunna få elementet längst ner i 
+  boxen
+  denna använder jag för
+  */
+  bottom: 0;
+  margin-bottom: 10px;
+  width: 95%;
 }
 
 @media (min-width: 1300px) {
@@ -91,7 +105,8 @@
 }
 
 .toggled_more_info {
+  /*Denna används för toggle på more info*/
   width: 100%;
-  height: 80%;
+  height: 40%;
 
 }

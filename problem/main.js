@@ -2,7 +2,7 @@
 
 
 
-/* -- R (VG)
+/* -- R 
 
   Notice the images on the page header.
 
@@ -32,7 +32,7 @@ document.querySelector("#search_field button").addEventListener("click", update_
 // Example: Click anywhere on the language-filter-container and all the language filters
 // (spanska, svenska, engelska, franska) will toggle.
 
-let the_filter_doms = document.querySelectorAll("#others_filter > div");
+let the_filter_doms = document.querySelectorAll(".filter_container");
 for (let i = 0; i <= the_filter_doms.length - 1; i++) {
   the_filter_doms[i].addEventListener("click", (event) => {
     add_group_toggling(event.currentTarget)
