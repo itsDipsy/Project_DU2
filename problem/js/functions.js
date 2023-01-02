@@ -397,8 +397,6 @@ function create_programme(programme) {
   if (programme !== undefined) {
     let programme_parent = document.querySelector("#programmes ul");
     let programme_dom = document.createElement("li");
-
-    let the_selected = document.querySelectorAll("select");
     programme_dom.classList.add("programme");
 
 
@@ -412,9 +410,9 @@ function create_programme(programme) {
           let city_id = UNIVERSITIES[the_univeristy_id].cityID;
           let uni_id = UNIVERSITIES[the_univeristy_id].id;
           let country_id = CITIES[city_id].countryID;
-          let random_num = Math.floor(Math.random() * CITIES[city_id].imagesNormal.length);
+          let random_num_for_images = Math.floor(Math.random() * CITIES[city_id].imagesNormal.length);
 
-          programme_dom.style.backgroundImage = `url(./media/geo_images/${CITIES[city_id].imagesNormal[random_num]})`;
+          programme_dom.style.backgroundImage = `url(./media/geo_images/${CITIES[city_id].imagesNormal[random_num_for_images]})`;
           programme_dom.innerHTML = `
             <div class="first_part_of_program_info">
               <div class="programme_name">${programme.name}</div>
@@ -426,7 +424,7 @@ function create_programme(programme) {
               <div class="show_more_text"></div>
             </div>
             <div class="bottom_programme">
-              <div class="the_text_bottom_prog">${CITIES[city_id].name}, sun-index:  ${get_random_number(400)} (${85})% </div>
+              <div class="the_text_bottom_prog">${CITIES[city_id].name}, sun-index:  ${CITIES[city_id].sun} (${Math.trunc(CITIES[city_id].sun / 10 * 2)})% </div>
             </div>
           `
         }
