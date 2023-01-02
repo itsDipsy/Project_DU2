@@ -2,7 +2,7 @@
 
 
 
-/*
+/* -- R (VG)
 
   Notice the images on the page header.
 
@@ -18,21 +18,20 @@
 
 create_filters();
 create_countries_cities_filters();
+update_programmes();
 
 
 // Add Interaction of search field button
 document.querySelector("#search_field button").addEventListener("click", update_programmes);
 
 // Initialise programmes list by calling relevant function
-update_programmes();
 
 
-// VG
+// VG -- R
 // Add Interaction of filter containers (select-deselect all filters in the container)
+// Example: Click anywhere on the language-filter-container and all the language filters
+// (spanska, svenska, engelska, franska) will toggle.
 
-// DETTA FUNKAR TYP, MEN NÄR MAN KLICKAR PÅ EN LI SÅ FUNKAR DET OCKSÅ VILKET
-// BLIR HELT KNAS SÅ DET MÅSTE FIXAS, MIN TANKE ÄR ATT DET FINNS NÅGON FORM AV 
-// CHILDREN PARENT GREJ INVOLVERAD
 let the_filter_doms = document.querySelectorAll("#others_filter > div");
 for (let i = 0; i <= the_filter_doms.length - 1; i++) {
   the_filter_doms[i].addEventListener("click", (event) => {
@@ -41,11 +40,9 @@ for (let i = 0; i <= the_filter_doms.length - 1; i++) {
   })
 }
 
-// Example: Click anywhere on the language-filter-container and all the language filters
-// (spanska, svenska, engelska, franska) will toggle.
 
 
-// VG
+// VG -- R
 // Add Interaction of button toggle-all-cities
 toggle_cities();
 

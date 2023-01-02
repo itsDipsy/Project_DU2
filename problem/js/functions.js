@@ -403,8 +403,7 @@ function create_programme(programme) {
 
 
     // THIS IS THE ALGOTRITHM TO CHECK AND APPLY A LOCATION TO A PICTURE CORRECTLY
-    let random_num = Math.floor(Math.random() * 2);
-    let random_num_for_procenter_function = Math.floor(Math.random() * 10);
+
     for (let j = 0; j < PROGRAMMES.length - 1; j++) {
       if (programme.universityID === PROGRAMMES[j].universityID) {
         let the_univeristy_id = programme.universityID;
@@ -413,6 +412,7 @@ function create_programme(programme) {
           let city_id = UNIVERSITIES[the_univeristy_id].cityID;
           let uni_id = UNIVERSITIES[the_univeristy_id].id;
           let country_id = CITIES[city_id].countryID;
+          let random_num = Math.floor(Math.random() * CITIES[city_id].imagesNormal.length);
 
           programme_dom.style.backgroundImage = `url(./media/geo_images/${CITIES[city_id].imagesNormal[random_num]})`;
           programme_dom.innerHTML = `
@@ -426,7 +426,7 @@ function create_programme(programme) {
               <div class="show_more_text"></div>
             </div>
             <div class="bottom_programme">
-              <div class="the_text_bottom_prog">${CITIES[city_id].name}, sun-index:  ${get_random_number(400)} (${percenter(random_num_for_procenter_function, 10)})% </div>
+              <div class="the_text_bottom_prog">${CITIES[city_id].name}, sun-index:  ${get_random_number(400)} (${85})% </div>
             </div>
           `
         }
