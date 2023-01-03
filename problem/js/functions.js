@@ -36,22 +36,13 @@ function click_filter_element(event) {
   // antalet programms, blir mer eller mindre beronde på klick av li och upptadering av programms per klick
   // Tar bort alla ul som fanns tidagare så att det inte appends på de gamala
 
-  let all_programs_appended_before = document.querySelector("#programmes > ul");
-  all_programs_appended_before.innerHTML = ""; /*
-                                                  JÄTTE VIKTIGT!
-                                                  Detta tar bort all tidagre element inuti programmes ul
-                                                  så att när uppdate_programs sker så kan den igen appenda
-                                                  allt så att det inte blir fler av samma programmes
-                                                */
   if (event.currentTarget.classList.contains("selected") === true) {
-    console.log("selected");
     update_programmes();
   }
-  if (event.currentTarget.classList.contains("selected") === false) {
-    console.log("unselected");
+  else {
     update_programmes();
+  }
 
-  }
   event.stopPropagation(); // denna stopar bubblingen till parenten
 }
 
@@ -103,24 +94,24 @@ function create_filter_element(data) {
 
 
 
-  const filer_dom = document.createElement("li");
+  const filter_dom = document.createElement("li");
 
 
-  filer_dom.classList.add(data.class);
-
-
-
-
-
-  filer_dom.textContent = data.textContent;
+  filter_dom.classList.add(data.class);
 
 
 
-  data.parent.append(filer_dom);
 
-  filer_dom.addEventListener("click", click_filter_element);
 
-  return filer_dom;
+  filter_dom.textContent = data.textContent;
+
+
+
+  data.parent.append(filter_dom);
+
+  filter_dom.addEventListener("click", click_filter_element);
+
+  return filter_dom;
 
 }
 
@@ -163,7 +154,14 @@ function add_group_toggling(filter_container_dom) {
   console.log(the_selected_lis);
   for (let i = 0; i < the_selected_lis.length; i++) {
     the_selected_lis[i].classList.toggle("selected");
+    if (the_selected_lis[0].classList.contains("selected") === true) {
+      the_selected_lis[i].classList.add("selected");
+    }
+    if (the_selected_lis[0].classList.contains("selected") === false) {
+      the_selected_lis[i].classList.remove("selected");
+    }
   }
+
   update_programmes();
 }
 
@@ -201,20 +199,15 @@ function toggle_cities() {
 
   the_button.addEventListener("click", () => {
     let all_selected = document.querySelectorAll(".country > ul > li");
-    if (all_selected[0].classList.contains("selected")) {
-      for (let i = 0; i < all_selected.length; i++) {
-        if (all_selected[i].classList.contains("selected") === true) {
-          all_selected[i].classList.remove("selected");
-          update_programmes();
-        }
+    for (let i = 0; i < all_selected.length; i++) {
+      all_selected[i].classList.toggle("selected");
+      if (all_selected[0].classList.contains("selected") === true) {
+        all_selected[i].classList.add("selected");
+        update_programmes();
       }
-    }
-    else {
-      for (let i = 0; i < all_selected.length; i++) {
-        if (all_selected[i].classList.contains("selected") === false) {
-          all_selected[i].classList.add("selected");
-          update_programmes();
-        }
+      if (all_selected[0].classList.contains("selected") === false) {
+        all_selected[i].classList.remove("selected");
+        update_programmes();
       }
     }
   })
