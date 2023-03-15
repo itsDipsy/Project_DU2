@@ -20,6 +20,8 @@ function click_filter_element(event) {
 
       programmes must be updated.
 
+ 
+
       Attention VG
 
         Careful with the propagation of the click-event
@@ -32,25 +34,24 @@ function click_filter_element(event) {
 
   */
 
-  event.currentTarget.classList.toggle("selected"); // togglar selected på alla de som li som clickas
-  // antalet programms, blir mer eller mindre beronde på klick av li och upptadering av programms per klick
-  // Tar bort alla ul som fanns tidagare så att det inte appends på de gamala
+  event.currentTarget.classList.toggle("selected");
 
   if (event.currentTarget.classList.contains("selected") === true) {
+    console.log("selected");
     update_programmes();
-  }
-  else {
-    update_programmes();
-  }
 
-  event.stopPropagation(); // denna stopar bubblingen till parenten
+  }
+  if (event.currentTarget.classList.contains("selected") === false) {
+    console.log("unselected");
+    update_programmes();
+  }
 }
 
 
 
 // G
 
-// CODE according to specification  ---- KLAR
+// CODE according to specification
 
 function create_filter_element(data) {
 
@@ -94,24 +95,24 @@ function create_filter_element(data) {
 
 
 
-  const filter_dom = document.createElement("li");
+  const filer_dom = document.createElement("li");
 
 
-  filter_dom.classList.add(data.class);
-
-
-
-
-
-  filter_dom.textContent = data.textContent;
+  filer_dom.classList.add(data.class);
 
 
 
-  data.parent.append(filter_dom);
 
-  filter_dom.addEventListener("click", click_filter_element);
 
-  return filter_dom;
+  filer_dom.textContent = data.textContent;
+
+
+
+  data.parent.append(filer_dom);
+
+  filer_dom.addEventListener("click", click_filter_element);
+
+  return filer_dom;
 
 }
 
@@ -122,6 +123,7 @@ function create_filter_element(data) {
 // CODE according to specification
 
 function add_group_toggling(filter_container_dom) {
+
   /*
 
     ARGUMENT
@@ -149,20 +151,7 @@ function add_group_toggling(filter_container_dom) {
  
 
   */
-  console.log(filter_container_dom);
-  let the_selected_lis = document.querySelectorAll(`#${filter_container_dom.id} > ul > li`);
-  console.log(the_selected_lis);
-  for (let i = 0; i < the_selected_lis.length; i++) {
-    the_selected_lis[i].classList.toggle("selected");
-    if (the_selected_lis[0].classList.contains("selected") === true) {
-      the_selected_lis[i].classList.add("selected");
-    }
-    if (the_selected_lis[0].classList.contains("selected") === false) {
-      the_selected_lis[i].classList.remove("selected");
-    }
-  }
 
-  update_programmes();
 }
 
 
@@ -171,7 +160,7 @@ function add_group_toggling(filter_container_dom) {
 
 // CODE according to specifications
 
-function toggle_cities() {
+function toggle_cities(event) {
 
   /*
 
@@ -194,19 +183,21 @@ function toggle_cities() {
  
 
     NO RETURN VALUE
+
+ 
+
 */
   let the_button = document.querySelector("#country_filter > button");
-
   the_button.addEventListener("click", () => {
-    let all_selected = document.querySelectorAll(".country > ul > li");
+    console.log("button-toggle-off-select-click");
+    let all_selected = document.querySelectorAll("li");
     for (let i = 0; i < all_selected.length; i++) {
-      all_selected[i].classList.toggle("selected");
-      if (all_selected[0].classList.contains("selected") === true) {
-        all_selected[i].classList.add("selected");
+      if (all_selected[i].classList.contains("selected")) {
+        all_selected[i].classList.remove("selected");
         update_programmes();
       }
-      if (all_selected[0].classList.contains("selected") === false) {
-        all_selected[i].classList.remove("selected");
+      else {
+        all_selected[i].classList.add("selected");
         update_programmes();
       }
     }
@@ -267,7 +258,7 @@ function create_countries_cities_filters() {
 
       parent: document.querySelector(`#country_${city.countryID} > ul`),
 
-      class: "selected", // ska va selected, igentligen men då selecteras alla lite jobbigt att jobba med det så ändrade det
+      class: "selected",
 
       textContent: city.name,
 
@@ -305,7 +296,7 @@ function create_filters() {
 
       parent: document.querySelector(`#${names[the_counter]}_filter > ul`), // här måste man kunna passa in alla det
 
-      class: "selected",// ska va selected, igentligen men då selecteras alla lite jobbigt att jobba med det så ändrade det
+      class: "selected",
 
       textContent: data.name,
 
@@ -341,6 +332,7 @@ function create_filters() {
 
 // CODE according to specifications
 function create_programme(programme) {
+
   /*
  
  
@@ -379,56 +371,27 @@ function create_programme(programme) {
  
   */
 
-
-  /*
-  THE KEY TO THIS ALGORITHM IS TOO SAVE THINGS IN VARABLES
-  BECAUSE THE DATABASE WORKS AS A STAIR AND VARIABLE LEEDS TO
-  THE EXACT VARIABLE I NEEDED WHICH WAS THE CITY ID
-  */
+  let programme_parent = document.querySelector("#programmes > ul");
 
 
-  if (programme !== undefined) {
-    let programme_parent = document.querySelector("#programmes ul");
-    let programme_dom = document.createElement("li");
-    programme_dom.classList.add("programme");
 
 
-    // THIS IS THE ALGOTRITHM TO CHECK AND APPLY A LOCATION TO A PICTURE CORRECTLY
+  let programme_dom = document.createElement("li");
 
-    for (let j = 0; j < PROGRAMMES.length - 1; j++) {
-      if (programme.universityID === PROGRAMMES[j].universityID) {
-        let the_univeristy_id = programme.universityID;
-        if (the_univeristy_id === UNIVERSITIES[the_univeristy_id].id) {
 
-          let city_id = UNIVERSITIES[the_univeristy_id].cityID;
-          let uni_id = UNIVERSITIES[the_univeristy_id].id;
-          let country_id = CITIES[city_id].countryID;
-          let random_num_for_images = Math.floor(Math.random() * CITIES[city_id].imagesNormal.length);
 
-          programme_dom.style.backgroundImage = `url(./media/geo_images/${CITIES[city_id].imagesNormal[random_num_for_images]})`;
-          programme_dom.innerHTML = `
-            <div class="first_part_of_program_info">
-              <div class="programme_name">${programme.name}</div>
-              <div class="programme_univeristy">${UNIVERSITIES[uni_id].name}</div> 
-              <div class="programme_country_and_city"> ${COUNTRIES[country_id].name}, ${CITIES[city_id].name}</div> 
-              <div class="level_laung_subject">${LEVELS[programme.levelID - 1].name}, ${SUBJECTS[programme.subjectID].name}, ${LANGUAGES[programme.languageID].name} </div>
-            </div>
-            <div class="more_info">
-              <div class="show_more_text"></div>
-            </div>
-            <div class="bottom_programme">
-              <div class="the_text_bottom_prog">${CITIES[city_id].name}, sun-index:  ${CITIES[city_id].sun} (${Math.trunc(CITIES[city_id].sun / 10 * 2)})% </div>
-            </div>
-          `
-        }
-      }
+  programme_dom.innerText = programme.name;
 
-    }
-    programme_parent.append(programme_dom);
-  }
+  programme_dom.classList.add("programme");
+
+  programme_dom.style.color = "white";
+
+  let random_num_0_to_3 = Math.floor(Math.random() * 2);
+  let random_num_0_to_33 = Math.floor(Math.random() * 32);
+  programme_dom.style.backgroundImage = `url(./media/geo_images/${CITIES[random_num_0_to_33].imagesNormal[random_num_0_to_3]})`
+  programme_parent.append(programme_dom);
+
 }
-
-
 
 
 
@@ -463,20 +426,14 @@ function update_programmes() {
  
 
   */
-
+  let parent_programe_ul = document.querySelector("#programmes > ul ");
+  parent_programe_ul.innerHTML = "";
   let number_of_programmes = read_filters();
-  let the_top_images = document.querySelectorAll("#top_images div");
-  let all_programs_appended_before = document.querySelector("#programmes > ul");
-  all_programs_appended_before.innerHTML = "";
-  for (let j = 0; j <= the_top_images.length - 1; j++) {
-    let random_num_for_images = Math.floor(Math.random() * 1);
-    let random_num_for_cities = Math.floor(Math.random() * 32);
-    the_top_images[j].style.backgroundImage = `url(./media/geo_images/${CITIES[random_num_for_cities].imagesNormal[random_num_for_images]})`;
-  }
-  for (let i = 0; i <= number_of_programmes.length; i++) {
+  console.log(number_of_programmes);
+  for (let i = 0; i < number_of_programmes.length; i++) {
     create_programme(number_of_programmes[i]);
   }
-  show_more_click_event(number_of_programmes);
+
 }
 
 
@@ -597,45 +554,23 @@ function read_filters() {
 }
 
 
-function show_more_click_event(programes) {
 
-  let the_show_more_button = document.querySelectorAll(".more_info");
-  for (let j = 0; j <= the_show_more_button.length - 1; j++) {
-    the_show_more_button[j].addEventListener("click", (event) => {
-      let the_program = programes[j];
-      if (event.currentTarget.classList.toggle("toggled_more_info")) {
 
-        let the_inner_text_dom = document.createElement("div");
-        let the_average_sum = 0;
-        let success_rate_sum = 0;
 
-        for (let o = 0; o <= the_program.entryGrades.length - 1; o++) {
-          the_average_sum = the_average_sum + the_program.entryGrades[o];
-        }
 
-        for (let w = 0; w < the_program.successRate.length; w++) {
-          success_rate_sum = success_rate_sum + the_program.successRate[w];
-        }
 
-        let average_entry_grades_result = the_average_sum / the_program.entryGrades.length;
-        let success_rate_result = success_rate_sum / the_program.successRate.length;
-        the_inner_text_dom.innerHTML = `
-          <div> 
-            Average entry grade: ${average_entry_grades_result.toFixed(1)}
-          </div>
-          <div>
-              Success rate: ${success_rate_result.toFixed(2)} %
-          </div>
-          <div>
-              Exchange ratio: ${the_program.exchangeStudents} / ${the_program.localStudents}
-          </div>
-          `;
-        the_show_more_button[j].appendChild(the_inner_text_dom);
-      }
-      else {
-        the_show_more_button[j].innerHTML = "";
-      }
-    })
-  }
 
-}
+
+
+
+
+
+
+
+
+
+
+
+// KOLLA PÅ FILMEN PÅ MOBILEN VÄLDIGT VIKTIGT FÖR ATT FÖRSTÅ VAD KOMMER NÄST TILL
+// På update_programmes så måste det nog finnas en eventlistner li.selected för att den ska kunna lyssna och triggas igång
+// när det klickas på något sätt annars kommer den ju bara köra på direkten i main.js (dator är snabb! tänk på det)
