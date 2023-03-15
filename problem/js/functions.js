@@ -39,10 +39,8 @@ function click_filter_element(event) {
   if (event.currentTarget.classList.contains("selected") === true) {
     console.log("selected");
     update_programmes();
-
   }
-  if (event.currentTarget.classList.contains("selected") === false) {
-    console.log("unselected");
+  else {
     update_programmes();
   }
 }
@@ -371,187 +369,182 @@ function create_programme(programme) {
  
   */
 
-  let programme_parent = document.querySelector("#programmes > ul");
 
 
 
+  if (programme !== undefined) {
+    let programme_parent = document.querySelector("#programmes ul");
+    let programme_dom = document.createElement("li");
+    programme_dom.classList.add("programme");
 
-  let programme_dom = document.createElement("li");
+    programme_dom.style.color = "white";
 
+    let random_num_0_to_3 = Math.floor(Math.random() * 2);
+    let random_num_0_to_33 = Math.floor(Math.random() * 32);
+    programme_dom.style.backgroundImage = `url(./media/geo_images/${CITIES[random_num_0_to_33].imagesNormal[random_num_0_to_3]})`
+    programme_parent.append(programme_dom);
 
-
-  programme_dom.innerText = programme.name;
-
-  programme_dom.classList.add("programme");
-
-  programme_dom.style.color = "white";
-
-  let random_num_0_to_3 = Math.floor(Math.random() * 2);
-  let random_num_0_to_33 = Math.floor(Math.random() * 32);
-  programme_dom.style.backgroundImage = `url(./media/geo_images/${CITIES[random_num_0_to_33].imagesNormal[random_num_0_to_3]})`
-  programme_parent.append(programme_dom);
-
-}
-
-
-
-// G
-
-// CODE according to the specification
-
-function update_programmes() {
-
-  /*
-
-      NO ARGUMENTS
-
- 
-
-      SIDE EFFECTS
-
-        This function updates the programmes shown on the page according to
-
-        the current filter status (which filter elements are selected / unselected).
-
-        It uses the function read_filters to know which programmes need to be included.
-
- 
-
-        VG: The top images (header) need to be updated here
-
- 
-
-      NO RETURN VALUE
-
- 
-
-  */
-  let parent_programe_ul = document.querySelector("#programmes > ul ");
-  parent_programe_ul.innerHTML = "";
-  let number_of_programmes = read_filters();
-  console.log(number_of_programmes);
-  for (let i = 0; i < number_of_programmes.length; i++) {
-    create_programme(number_of_programmes[i]);
   }
 
-}
 
 
+  // G
 
-// G
+  // CODE according to the specification
 
-// WRITE SPECIFICATION
+  function update_programmes() {
 
-
-
-// Denna funktionen skapar fyra arrays som skickar in data från vår js fil (database.js) Med hjälp av array_each så skickar vi in det vi vill ha till en ny array som har namnet programme. I programme så sparar vi alla namn som vi har skickat in med hjälp av array_each.
-
-
-
-// You must understand how this function works. There will be questions about it
-
-// in the code review (kodredovisning)
-
-
-
-// Optional VG: Which parts of the function's code could be abstracted?
-
-//              Implement it
-function read_filters() {
-
-  const city_selected_dom = document.querySelectorAll("#country_filter li.selected");
-
-  const city_id_selected = [];
-  function callback_add_cityID(dom_element) {
-    const id_as_integer = parseInt(dom_element.dataset.id);
-    city_id_selected.push(id_as_integer);
+    /*
+  
+        NO ARGUMENTS
+  
+   
+  
+        SIDE EFFECTS
+  
+          This function updates the programmes shown on the page according to
+  
+          the current filter status (which filter elements are selected / unselected).
+  
+          It uses the function read_filters to know which programmes need to be included.
+  
+   
+  
+          VG: The top images (header) need to be updated here
+  
+   
+  
+        NO RETURN VALUE
+  
+   
+  
+    */
+    let parent_programe_ul = document.querySelector("#programmes > ul ");
+    parent_programe_ul.innerHTML = "";
+    let number_of_programmes = read_filters();
+    console.log(number_of_programmes);
+    for (let i = 0; i < number_of_programmes.length; i++) {
+      create_programme(number_of_programmes[i]);
+    }
+    show_more_click_event(number_of_programmes);
   }
-  array_each(city_selected_dom, callback_add_cityID);
 
-  const universities = [];
-  for (let i = 0; i < city_id_selected.length; i++) {
-    const city_id = city_id_selected[i];
-    for (let ii = 0; ii < UNIVERSITIES.length; ii++) {
-      const university = UNIVERSITIES[ii];
-      if (university.cityID === city_id) {
-        universities.push(university);
+
+
+  // G
+
+  // WRITE SPECIFICATION
+
+
+
+  // Denna funktionen skapar fyra arrays som skickar in data från vår js fil (database.js) Med hjälp av array_each så skickar vi in det vi vill ha till en ny array som har namnet programme. I programme så sparar vi alla namn som vi har skickat in med hjälp av array_each.
+
+
+
+  // You must understand how this function works. There will be questions about it
+
+  // in the code review (kodredovisning)
+
+
+
+  // Optional VG: Which parts of the function's code could be abstracted?
+
+  //              Implement it
+  function read_filters() {
+
+    const city_selected_dom = document.querySelectorAll("#country_filter li.selected");
+
+    const city_id_selected = [];
+    function callback_add_cityID(dom_element) {
+      const id_as_integer = parseInt(dom_element.dataset.id);
+      city_id_selected.push(id_as_integer);
+    }
+    array_each(city_selected_dom, callback_add_cityID);
+
+    const universities = [];
+    for (let i = 0; i < city_id_selected.length; i++) {
+      const city_id = city_id_selected[i];
+      for (let ii = 0; ii < UNIVERSITIES.length; ii++) {
+        const university = UNIVERSITIES[ii];
+        if (university.cityID === city_id) {
+          universities.push(university);
+        }
       }
     }
-  }
 
-  let programmes = [];
-  function callback_add_programmes(university) {
-    const university_id = university.id;
-    for (let i = 0; i < PROGRAMMES.length; i++) {
-      const programme = PROGRAMMES[i];
-      if (programme.universityID === university_id) {
-        programmes.push(programme);
+    let programmes = [];
+    function callback_add_programmes(university) {
+      const university_id = university.id;
+      for (let i = 0; i < PROGRAMMES.length; i++) {
+        const programme = PROGRAMMES[i];
+        if (programme.universityID === university_id) {
+          programmes.push(programme);
+        }
       }
     }
-  }
-  array_each(universities, callback_add_programmes);
+    array_each(universities, callback_add_programmes);
 
 
 
-  const level_selected_dom = document.querySelectorAll("#level_filter li.selected");
-  const level_id_selected = [];
-  function callback_add_levelID(dom_element) {
-    const id_as_integer = parseInt(dom_element.dataset.id);
-    level_id_selected.push(id_as_integer);
-  }
-  array_each(level_selected_dom, callback_add_levelID);
-
-  function test_function_level(programme) {
-    return level_id_selected.includes(programme.levelID);
-  }
-  programmes = array_filter(programmes, test_function_level);
-
-
-
-  const language_selected_dom = document.querySelectorAll("#language_filter li.selected");
-  const language_id_selected = [];
-  function callback_add_languageID(dom_element) {
-    const id_as_integer = parseInt(dom_element.dataset.id);
-    language_id_selected.push(id_as_integer);
-  }
-  array_each(language_selected_dom, callback_add_languageID);
-
-
-
-  function test_function_language(programme) {
-    return language_id_selected.includes(programme.languageID);
-  }
-  programmes = array_filter(programmes, test_function_language);
-
-
-
-  const subject_selected_dom = document.querySelectorAll("#subject_filter li.selected");
-  const subject_id_selected = [];
-  function callback_add_subjectID(dom_element) {
-    const id_as_integer = parseInt(dom_element.dataset.id);
-    subject_id_selected.push(id_as_integer);
-  }
-  array_each(subject_selected_dom, callback_add_subjectID);
-
-
-
-  function test_function_subject(programme) {
-    return subject_id_selected.includes(programme.subjectID);
-  }
-  programmes = array_filter(programmes, test_function_subject);
-
-
-
-  const search_string = document.querySelector("#search_field input").value;
-  if (search_string !== "") {
-    function test_function(programme) {
-      return programme.name.includes(search_string);
+    const level_selected_dom = document.querySelectorAll("#level_filter li.selected");
+    const level_id_selected = [];
+    function callback_add_levelID(dom_element) {
+      const id_as_integer = parseInt(dom_element.dataset.id);
+      level_id_selected.push(id_as_integer);
     }
-    programmes = array_filter(programmes, test_function);
-  }
+    array_each(level_selected_dom, callback_add_levelID);
 
-  return programmes;
-}
+    function test_function_level(programme) {
+      return level_id_selected.includes(programme.levelID);
+    }
+    programmes = array_filter(programmes, test_function_level);
+
+
+
+    const language_selected_dom = document.querySelectorAll("#language_filter li.selected");
+    const language_id_selected = [];
+    function callback_add_languageID(dom_element) {
+      const id_as_integer = parseInt(dom_element.dataset.id);
+      language_id_selected.push(id_as_integer);
+    }
+    array_each(language_selected_dom, callback_add_languageID);
+
+
+
+    function test_function_language(programme) {
+      return language_id_selected.includes(programme.languageID);
+    }
+    programmes = array_filter(programmes, test_function_language);
+
+
+
+    const subject_selected_dom = document.querySelectorAll("#subject_filter li.selected");
+    const subject_id_selected = [];
+    function callback_add_subjectID(dom_element) {
+      const id_as_integer = parseInt(dom_element.dataset.id);
+      subject_id_selected.push(id_as_integer);
+    }
+    array_each(subject_selected_dom, callback_add_subjectID);
+
+
+
+    function test_function_subject(programme) {
+      return subject_id_selected.includes(programme.subjectID);
+    }
+    programmes = array_filter(programmes, test_function_subject);
+
+
+
+    const search_string = document.querySelector("#search_field input").value;
+    if (search_string !== "") {
+      function test_function(programme) {
+        return programme.name.includes(search_string);
+      }
+      programmes = array_filter(programmes, test_function);
+    }
+
+    return programmes;
+  }
 
 
 
